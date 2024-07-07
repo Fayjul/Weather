@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <div *ngIf="!hasCityName">
+    <img [src]="path" alt="Weather Icon" class="weather-icon" />
+    <h1>Please Enter Your City Name.</h1>
+    <form [formGroup]="cityForm" (ngSubmit)="getCityName()">
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="city"
+          placeholder="City Name"
+          class="form-control"
+        />
+        <div
+          *ngIf="
+            cityForm.controls['city'].invalid &&
+            cityForm.controls['city'].touched
+          "
+          class="error"
+        >
+          City name is required.
+        </div>
+      </div>
+      <button type="submit" [disabled]="cityForm.invalid" class="btn">
+        Search
+      </button>
+    </form>
+  </div>
+  <div *ngIf="hasCityName">
+    <div class="weather-info">
+      <img [src]="path" alt="Weather Icon" class="weather-icon" />
+      <p>The temperature of {{ cityName }} is ....</p>
+      <h1>{{ message }}</h1>
+      <p class="temperature">{{ temperature }}°C</p>
+    </div>
+  </div>
+</div>
