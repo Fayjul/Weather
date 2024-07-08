@@ -28,15 +28,20 @@ export class AppComponent {
     if (this.cityForm?.valid) {
       this.cityName = this.cityForm.value.city;
       this.hasCityName = true;
-      this.temperature = this.weatherService.getTemparature(this.cityName);
-      this.path =
-        this.temperature > 30 ? '../assets/hot.jfif' : '../assets/cold.jfif';
-      this.message =
-        this.temperature > 30
-          ? "It's Hot. Don't go out with out Umbrella"
-          : "It's Cold. Don't go out with out winter cloths";
-      if (this.temperature < 30 && this.temperature > 20)
-        this.message = 'Go out, Pera nai, Chill.';
+      //this.temperature = 20;
+      //console.log()
+      this.weatherService.getTemparature(this.cityName).subscribe((res) => {
+        this.temperature = res.current.heatindex_c;
+        //console.log(res.current.heatindex_c);
+        this.path =
+          this.temperature > 30 ? '../assets/hot.jfif' : '../assets/cold.jfif';
+        this.message =
+          this.temperature > 30
+            ? "It's Hot. Don't go out with out Umbrella"
+            : "It's Cold. Don't go out with out winter cloths";
+        if (this.temperature < 30 && this.temperature > 20)
+          this.message = 'Go out, Pera nai, Chill.';
+      });
     }
   }
 }

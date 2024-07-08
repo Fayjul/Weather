@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,14 @@ export class WeatherService {
 
   constructor(private http: HttpClient) {}
 
-  getTemparature(city: string) {
+  getTemparature(city: string): Observable<any> {
     const headers = new HttpHeaders({
-      'x-rapidapi-host': 'api.example.com', // Replace with the actual API host
-      'x-rapidapi-key': this.apiKey
+      'x-rapidapi-host': 'weather-api-by-any-city.p.rapidapi.com', // Replace with the actual API host
+      'x-rapidapi-key': this.apiKey,
     });
-    
-    let temperature = Math.random() * 30 + 10;
 
-    return Math.ceil(temperature) % 50;
+    const option = { headers };
+
+    return this.http.get(`${this.apiUrl}/${city}`, option);
   }
 }
